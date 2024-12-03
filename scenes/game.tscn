@@ -492,6 +492,7 @@ shape = SubResource("RectangleShape2D_yxdy2")
 position = Vector2(-387, -79)
 
 [node name="MultiplayerHUD" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 584.0
