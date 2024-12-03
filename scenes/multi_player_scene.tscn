@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://caarjli2dv1p3"]
+
+[ext_resource type="Script" path="res://scripts/multi_player_scene.gd" id="1_b0kcg"]
+[ext_resource type="PackedScene" uid="uid://byt8u251nljr1" path="res://scenes/player.tscn" id="2_xjord"]
+
+[node name="MultiPlayerScene" type="Node"]
+script = ExtResource("1_b0kcg")
+player_to_add = ExtResource("2_xjord")

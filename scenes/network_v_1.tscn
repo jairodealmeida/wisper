@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://dey18qb7dg8dn"]
+
+[ext_resource type="Script" path="res://scripts/network_v1.gd" id="1_jjjp4"]
+[ext_resource type="PackedScene" uid="uid://byt8u251nljr1" path="res://scenes/player.tscn" id="2_duhqy"]
+
+[node name="NetworkV1" type="Node"]
+script = ExtResource("1_jjjp4")
+player_scene = ExtResource("2_duhqy")
+
+[node name="HostButton" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 10.0
+offset_right = 129.0
+offset_bottom = 41.0
+text = "Create Server"
+
+[node name="JoinButton" type="Button" parent="."]
+offset_left = 309.0
+offset_top = 9.0
+offset_right = 347.0
+offset_bottom = 40.0
+text = "Join"
+
+[node name="StartGameButton" type="Button" parent="."]
+offset_left = 373.0
+offset_top = 11.0
+offset_right = 469.0
+offset_bottom = 42.0
+text = "Start Game"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="button_down" from="HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="button_down" from="JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="button_down" from="StartGameButton" to="." method="_on_start_game_button_button_down"]

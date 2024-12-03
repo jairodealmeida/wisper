@@ -1,0 +1,125 @@
+[gd_scene load_steps=14 format=3 uid="uid://cl6ee0aa7yxnw"]
+
+[ext_resource type="Script" path="res://scripts/Tower.gd" id="1_b08va"]
+[ext_resource type="Texture2D" uid="uid://byj3x4gvfxpth" path="res://assets/sprites/tower_aliance.png" id="2_fy1xv"]
+[ext_resource type="Script" path="res://scripts/DetectionArea.gd" id="4_uwm08"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lsic"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(0, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j37u4"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(83, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37am7"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(166, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enki8"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(249, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdcng"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(332, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23ybe"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(415, 232, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onx6q"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(0, 0, 83, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrrvd"]
+atlas = ExtResource("2_fy1xv")
+region = Rect2(0, 116, 83, 116)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hnbuv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lsic")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_j37u4")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_37am7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enki8")
+}, {
+"duration": 0.1,
+"texture": SubResource("AtlasTexture_sdcng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23ybe")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onx6q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrrvd")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yb1i5"]
+radius = 94.1913
+
+[node name="Tower" type="CharacterBody2D"]
+position = Vector2(49, -2)
+collision_layer = 3
+script = ExtResource("1_b08va")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, -9)
+polygon = PackedVector2Array(25, -18, 4, -44, -17, -19, -17, 47, -25, 53, 31, 53, 25, 38)
+one_way_collision = true
+one_way_collision_margin = 0.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9)
+sprite_frames = SubResource("SpriteFrames_hnbuv")
+animation = &"hit"
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -2.0
+offset_top = -27.0
+offset_right = 34.0
+scale = Vector2(0.399999, 0.28)
+max_value = 500.0
+
+[node name="RayCast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+enabled = false
+target_position = Vector2(18, 0)
+
+[node name="DetectionArea" type="Area2D" parent="."]
+script = ExtResource("4_uwm08")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_yb1i5")
+
+[node name="NickName" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -53.0
+offset_right = 24.0
+offset_bottom = -30.0
+
+[node name="ProjectileTimer" type="Timer" parent="."]

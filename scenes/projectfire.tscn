@@ -1,0 +1,95 @@
+[gd_scene load_steps=13 format=3 uid="uid://bob27oxhgah31"]
+
+[ext_resource type="Script" path="res://scripts/Projectile.gd" id="1_dqnf4"]
+[ext_resource type="Texture2D" uid="uid://du0m1mqbsqvj0" path="res://assets/particles/floaty_64.png" id="2_berfp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pd1vn"]
+radius = 5.09902
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm83j"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 7
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y1ugq"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="Gradient" id="Gradient_7oqq6"]
+offsets = PackedFloat32Array(0, 0.405063, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.417722, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cvh0t"]
+gradient = SubResource("Gradient_7oqq6")
+
+[sub_resource type="Curve" id="Curve_uww5w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.175824), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rojw1"]
+curve = SubResource("Curve_uww5w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uliea"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 90.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_rojw1")
+color_ramp = SubResource("GradientTexture1D_cvh0t")
+turbulence_enabled = true
+turbulence_noise_scale = 4.2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctpyo"]
+radius = 5.0
+
+[sub_resource type="Environment" id="Environment_vmy1h"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 4.1
+glow_strength = 1.15
+glow_blend_mode = 0
+glow_hdr_scale = 0.8
+
+[node name="Projectfire" type="AnimatableBody2D"]
+script = ExtResource("1_dqnf4")
+
+[node name="CollisionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+shape = SubResource("CircleShape2D_pd1vn")
+one_way_collision_margin = 0.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_mm83j")
+amount = 20
+amount_ratio = 0.5
+process_material = SubResource("ParticleProcessMaterial_y1ugq")
+texture = ExtResource("2_berfp")
+lifetime = 0.5
+randomness = 0.3
+trail_lifetime = 1.0
+
+[node name="Fire" type="GPUParticles2D" parent="."]
+amount = 150
+process_material = SubResource("ParticleProcessMaterial_uliea")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_ctpyo")
+one_way_collision_margin = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pd1vn")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vmy1h")

@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://bed2yj8fvf1mj"]
+
+[ext_resource type="Script" path="res://scripts/plaform.gd" id="1_ipg6j"]
+[ext_resource type="Texture2D" uid="uid://d1cijfityp4nm" path="res://assets/sprites/platforms.png" id="1_ud53p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ea00f"]
+size = Vector2(32, 8.5)
+
+[sub_resource type="Curve2D" id="Curve2D_4q84q"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lhfsk"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_dpl51"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_prv2d"]
+_data = {
+"new_animation": SubResource("Animation_dpl51")
+}
+
+[node name="Plaform" type="AnimatableBody2D"]
+script = ExtResource("1_ipg6j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ud53p")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.25)
+shape = SubResource("RectangleShape2D_ea00f")
+one_way_collision = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_4q84q")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Path2D/PathFollow2D"]
+remote_path = NodePath("../../..")
+
+[node name="PlataformSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lhfsk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_prv2d")
+}

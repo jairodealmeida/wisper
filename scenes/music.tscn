@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://jy5taydp47mw"]
+
+[ext_resource type="AudioStream" uid="uid://c3mwts8udrpnl" path="res://assets/music/03. Wilderness.mp3" id="1_a3dmf"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_a3dmf")
+bus = &"Music"
