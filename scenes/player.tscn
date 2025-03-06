@@ -622,6 +622,7 @@ position = Vector2(-1, 0)
 collision_layer = 2
 script = ExtResource("1_41h56")
 respawn_position = Vector2(722, 108)
+damage = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_yn8gd")
